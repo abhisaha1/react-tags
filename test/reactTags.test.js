@@ -12,6 +12,7 @@ import { KEYS, DEFAULT_PLACEHOLDER } from '../lib/constants';
 
 const defaults = {
   tags: [{ id: 'Apple', text: 'Apple' }],
+  labelField: 'text',
   suggestions: [
     { id: 'Banana', text: 'Banana' },
     { id: 'Apple', text: 'Apple' },
@@ -30,8 +31,6 @@ function mockItem(overrides) {
 }
 
 describe('Test ReactTags', () => {
-
-
   test('should render with expected props', function() {
     const $el = shallow(mockItem());
     const expectedProps = {
@@ -48,7 +47,6 @@ describe('Test ReactTags', () => {
       autocomplete: false,
       readOnly: false,
       ...defaults,
-
     };
     expect($el).to.have.length(1);
     expect($el.props()).to.deep.equal(expectedProps);
@@ -185,7 +183,7 @@ describe('Test ReactTags', () => {
         'Pear',
         'Peach',
         'Kiwi',
-      ].map(value => ({ id: value, text: value }));
+      ].map((value) => ({ id: value, text: value }));
 
       expect(tags).to.deep.have.same.members(expected);
     });
@@ -212,16 +210,15 @@ describe('Test ReactTags', () => {
 
       $input.simulate('paste', {
         clipboardData: {
-          getData: () =>
-            'Banana,Apple,Banana',
+          getData: () => 'Banana,Apple,Banana',
         },
       });
 
       // Note that 'Apple' and 'Banana' are only included once in the expected list
-      const expected = [
-        'Apple',
-        'Banana',
-      ].map(value => ({ id: value, text: value }));
+      const expected = ['Apple', 'Banana'].map((value) => ({
+        id: value,
+        text: value,
+      }));
 
       expect(tags).to.deep.have.same.members(expected);
     });

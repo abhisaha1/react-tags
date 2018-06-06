@@ -61,15 +61,19 @@ var Suggestions = function (_Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Suggestions.__proto__ || Object.getPrototypeOf(Suggestions)).call.apply(_ref, [this].concat(args))), _this), _this.markIt = function (input, query) {
       var escapedRegex = query.trim().replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
+      var labelValue = input[_this.props.labelField];
+
+
+      var value = labelValue || '';
       return {
-        __html: input.text.replace(RegExp(escapedRegex, 'gi'), '<mark>$&</mark>')
+        __html: value.replace(RegExp(escapedRegex, 'gi'), '<mark>$&</mark>')
       };
     }, _this.shouldRenderSuggestions = function (query) {
-      var _this2 = _this,
-          props = _this2.props;
+      var _this$props = _this.props,
+          minQueryLength = _this$props.minQueryLength,
+          isFocused = _this$props.isFocused;
 
-      var minQueryLength = _number2.default.isInteger(props.minQueryLength) ? props.minQueryLength : 2;
-      return query.length >= minQueryLength && props.isFocused;
+      return query.length >= minQueryLength && isFocused;
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -100,7 +104,7 @@ var Suggestions = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       var props = this.props;
 
@@ -126,7 +130,7 @@ var Suggestions = function (_Component) {
         'div',
         {
           ref: function ref(elem) {
-            _this3.suggestionsContainer = elem;
+            _this2.suggestionsContainer = elem;
           },
           className: this.props.classNames.suggestions },
         _react2.default.createElement(
@@ -152,6 +156,10 @@ Suggestions.propTypes = {
   minQueryLength: _propTypes2.default.number,
   shouldRenderSuggestions: _propTypes2.default.func,
   isFocused: _propTypes2.default.bool.isRequired,
-  classNames: _propTypes2.default.object
+  classNames: _propTypes2.default.object,
+  labelField: _propTypes2.default.string.isRequired
+};
+Suggestions.defaultProps = {
+  minQueryLength: 2
 };
 exports.default = Suggestions;
