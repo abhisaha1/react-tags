@@ -72,10 +72,10 @@ var ReactTags = function (_Component) {
       var tags = _this.props.tags;
 
       var existingKeys = tags.map(function (tag) {
-        return tag.id.toLowerCase();
+        return tag.id;
       });
       // Return if tag has been already added
-      if (existingKeys.indexOf(tag.id.toLowerCase()) >= 0) {
+      if (existingKeys.indexOf(tag.id) >= 0) {
         return;
       }
       if (_this.props.autocomplete) {
